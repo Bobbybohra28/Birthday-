@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #ffdde1;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card {
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .photo-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .photo {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+            position: absolute;
+            opacity: 0;
+            object-fit: contain;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .active {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .text {
+            font-size: 26px;
+            font-weight: bold;
+            color: #e91e63;
+            margin-top: 15px;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 5px #ff4081;
+            }
+
+            100% {
+                text-shadow: 0 0 20px #ff79b0;
+            }
+        }
+
+        .birthday-date {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .location {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .location:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall 3s infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(500px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s;
+        }
+
+        .button:hover {
+            background-color: #e91e63;
+            transform: scale(1.1);
+        }
+
+        .message {
+            font-size: 18px;
+            color: #ff4081;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .credit {
+            font-size: 16px;
+            color: #e91e63;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="photo-container">
+            <img src="mb.jpg" alt="Birthday" class="photo">
+            <img src="mb1.jpg" alt="Birthday" class="photo">
+            <img src="mb2.jpg" alt="Birthday" class="photo">
+            <img src="mb3.jpg" alt="Birthday" class="photo">
+        </div>
+        <div class="text">🎉 Happy Birthday! 🎂</div>
+        <div class="birthday-date">🎈 Date: 20th March 2025</div>
+        <a href="https://www.google.com/maps?q=Your+Party+Location" target="_blank" class="location">📍 Party Location</a>
+        <div class="message">May your day be filled with joy, love, and laughter! 💖</div>
+        <button class="button" onclick="playSong()">Play Song 🎶</button>
+        <audio id="birthdaySong" src="birthdaysong.mp3"></audio>
+        <div class="credit">From: Bobby</div>
+    </div>
+
+    <script>
+        let photos = document.querySelectorAll(".photo");
+        let index = 0;
+
+        function showNextPhoto() {
+            photos.forEach(photo => photo.classList.remove("active"));
+            photos[index].classList.add("active");
+            index = (index + 1) % photos.length;
+            setTimeout(showNextPhoto, 3000);
+        }
+        setTimeout(showNextPhoto, 1000);
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                let confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                confetti.style.left = Math.random() * window.innerWidth + "px";
+                confetti.style.top = -Math.random() * 50 + "px";
+                confetti.style.backgroundColor = ["#ff0000", "#ff7300", "#ffeb00", "#00ff6a", "#00cfff", "#cc00ff", "#ff007b"][Math.floor(Math.random() * 7)];
+                confetti.style.width = confetti.style.height = Math.random() * 10 + 5 + "px";
+                confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+        setInterval(createConfetti, 800);
+
+        function playSong() {
+            document.getElementById("birthdaySong").play();
+        }
+    </script>
+</body>
+
+</html>
